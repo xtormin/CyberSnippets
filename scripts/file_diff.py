@@ -14,7 +14,7 @@ parser.add_argument('-o','--option',
                             > c : file1 + file2
                     ''',  nargs=1, default='b')                         
 
-def get_list_from_file(filename):
+def read_file(filename):
     f = open(filename, 'r')
     data = f.read()
     data = data.split('\n')
@@ -30,8 +30,8 @@ if __name__ == '__main__':
 
     first_file = args.files[0]
     second_file = args.files[1]
-    first_list = get_list_from_file(first_file)
-    second_list = get_list_from_file(second_file)
+    first_list = read_file(first_file)
+    second_list = read_file(second_file)
 
     # OPTIONS
     def a():

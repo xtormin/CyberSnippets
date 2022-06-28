@@ -1,0 +1,8 @@
+https://raw.githubusercontent.com/m8r0wn/subscraper/master/subscraper/resources/subdomains.txt
+https://raw.githubusercontent.com/screetsec/Sudomy/master/wordlist/All_SubdomainTOP_Seclist.txt
+https://raw.githubusercontent.com/laramies/theHarvester/master/wordlists/names_small.txt
+https://raw.githubusercontent.com/laramies/theHarvester/master/wordlists/dorks.txt
+https://raw.githubusercontent.com/laramies/theHarvester/master/wordlists/dns-names.txt
+https://raw.githubusercontent.com/laramies/theHarvester/master/wordlists/dns-big.txt
+https://raw.githubusercontent.com/shmilylty/OneForAll/master/data/subnames.txt
+https://raw.githubusercontent.com/thewhiteh4t/FinalRecon/master/wordlists/dirb_big.txt
