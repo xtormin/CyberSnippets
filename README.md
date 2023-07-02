@@ -14,6 +14,7 @@ The following is a list of the scripts included, instructions and examples of us
 
 - Identification of different elements between files.
 - Combinator of lists of elements.
+- Configuration files.
 
 ### Identification of different elements between files
 
@@ -57,3 +58,10 @@ python3 file_merger.py -w ../resources/examples/f1 ../resources/examples/f2 -o t
 ```
 
 ![Examples](setup/images/file_merger.png)
+
+### Configuration files
+
+#### Powerlevel10k configuration
+
+[p10k.zsh](configfiles%2Fp10k.zsh)
+
