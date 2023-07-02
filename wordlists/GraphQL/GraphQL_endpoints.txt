@@ -1,0 +1,5 @@
+/graphql
+/api
+/api/graphql
+/graphql/api
+/graphql/graphql
