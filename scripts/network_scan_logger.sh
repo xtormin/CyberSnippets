@@ -1,24 +1,24 @@
 #!/bin/bash
 
-# Comprobamos que se pasen los argumentos necesarios
+# Check if necessary arguments are provided
 if [ $# -ne 2 ]; then
     echo "Usage: $0 <HostFile> <ScanType>"
     echo "-> ScanType values: tcp-1000, tcp-full, udp-common, udp-1000, udp-full"
     exit 1
 fi
 
-# Asignamos los argumentos a variables
+# Assign arguments to variables
 HostFile=$1
 ScanType=$2
 
-# Definimos los comandos de escaneo predefinidos y sus correspondientes comandos Nmap
+# Define predefined scanning commands and their corresponding Nmap commands
 tcp_1000="sudo nmap -v -T4 -Pn -open -sS --script=default,vuln -A --host-timeout 10m"
 tcp_full="nmap -v -T4 -Pn -open -sS --script=default,vuln -A --host-timeout 10m -p-"
 udp_common="nmap -v -T4 -Pn -sU -sV -A --host-timeout 10m -p '53,69,11,123,137,161,500,514,520,563'"
 udp_1000="nmap -v -T4 -Pn -sU -sV -A --host-timeout 10m"
 udp_full="nmap -v -T4 -Pn -sU -sV -A --host-timeout 10m -p-"
 
-# Comprobamos si el tipo de escaneo proporcionado es válido
+# Check if the provided scan type is valid
 case $ScanType in
     tcp-1000) NmapScanCommand=$tcp_1000 ;;
     tcp-full) NmapScanCommand=$tcp_full ;;
@@ -28,26 +28,26 @@ case $ScanType in
     *) echo "Invalid ScanType. Please choose one of: tcp-1000, tcp-full, udp-common, udp-1000, udp-full"; exit 1 ;;
 esac
 
-# Iteramos sobre cada host en el archivo proporcionado y realizamos el escaneo
+# Iterate over each host in the provided file and perform the scan
 while IFS= read -r IP || [ -n "$IP" ]; do
-    # Creamos una carpeta para cada host para guardar los resultados del escaneo
+    # Create a folder for each host to save the scan results
     WorkFolder="nmap/hosts"
     HostFolder="$WorkFolder/$IP"
     FileName="$IP\_$ScanType"
 
-    # Intentamos crear la carpeta
+    # Attempt to create the folder
     mkdir -p "$HostFolder"
     echo "|+| Folder created: $HostFolder"
 
-    # Registramos información sobre el escaneo
+    # Log scan information
     ScanLogInfo="[$(date)] | $HostFolder | $FileName"
     ScanInfoStart="$ScanLogInfo | started"
     ScanInfoFinish="$ScanLogInfo | finished"
 
-    # Construimos el comando Nmap basado en el tipo de escaneo elegido
+    # Build the Nmap command based on the chosen scan type
     NmapScanCommand="$NmapScanCommand -oA $HostFolder/$FileName $IP"
 
-    # Iniciamos el escaneo y registramos información en un archivo
+    # Start the scan and log information to a file
     echo "$ScanInfoStart"
     echo "$ScanInfoStart" >> "$WorkFolder/scan.logs"
     eval "$NmapScanCommand"
