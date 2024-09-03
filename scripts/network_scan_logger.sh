@@ -13,10 +13,10 @@ ScanType=$2
 
 # Define predefined scanning commands and their corresponding Nmap commands
 tcp_1000="sudo nmap -v -T4 -Pn -open -sS --script=default,vuln -A --host-timeout 10m"
-tcp_full="nmap -v -T4 -Pn -open -sS --script=default,vuln -A --host-timeout 10m -p-"
-udp_common="nmap -v -T4 -Pn -sU -sV -A --host-timeout 10m -p '53,69,11,123,137,161,500,514,520,563'"
-udp_1000="nmap -v -T4 -Pn -sU -sV -A --host-timeout 10m"
-udp_full="nmap -v -T4 -Pn -sU -sV -A --host-timeout 10m -p-"
+tcp_full="sudo nmap -v -T4 -Pn -open -sS --script=default,vuln -A --host-timeout 10m -p-"
+udp_common="sudo nmap -v -T4 -Pn -sU -sV -A --host-timeout 10m -p '53,69,11,123,137,161,500,514,520,563'"
+udp_1000="sudo nmap -v -T4 -Pn -sU -sV -A --host-timeout 10m"
+udp_full="sudo nmap -v -T4 -Pn -sU -sV -A --host-timeout 10m -p-"
 
 # Check if the provided scan type is valid
 case $ScanType in
@@ -40,17 +40,19 @@ while IFS= read -r IP || [ -n "$IP" ]; do
     echo "|+| Folder created: $HostFolder"
 
     # Log scan information
-    ScanLogInfo="[$(date)] | $HostFolder | $FileName"
+    ScanLogInfo="$HostFolder | $FileName"
     ScanInfoStart="$ScanLogInfo | started"
     ScanInfoFinish="$ScanLogInfo | finished"
 
+    TargetOutput="-oA $HostFolder/$FileName $IP"
     # Build the Nmap command based on the chosen scan type
-    NmapScanCommand="$NmapScanCommand -oA $HostFolder/$FileName $IP"
+    NmapScanCommand="$NmapScanCommand $TargetOutput"
 
     # Start the scan and log information to a file
-    echo "$ScanInfoStart"
+    echo "[$(date)] | $ScanInfoStart"
     echo "$ScanInfoStart" >> "$WorkFolder/scan.logs"
     eval "$NmapScanCommand"
-    echo "$ScanInfoFinish"
+    echo "[$(date)] | $ScanInfoFinish"
     echo "$ScanInfoFinish" >> "$WorkFolder/scan.logs"
+    TargetOutput=""
 done < "$HostFile"
