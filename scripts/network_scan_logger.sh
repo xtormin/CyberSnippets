@@ -46,12 +46,12 @@ while IFS= read -r IP || [ -n "$IP" ]; do
 
     TargetOutput="-oA $HostFolder/$FileName $IP"
     # Build the Nmap command based on the chosen scan type
-    NmapScanCommand="$NmapScanCommand $TargetOutput"
+    NmapScan="$NmapScanCommand $TargetOutput"
 
     # Start the scan and log information to a file
     echo "[$(date)] | $ScanInfoStart"
     echo "$ScanInfoStart" >> "$WorkFolder/scan.logs"
-    eval "$NmapScanCommand"
+    eval "$NmapScan"
     echo "[$(date)] | $ScanInfoFinish"
     echo "$ScanInfoFinish" >> "$WorkFolder/scan.logs"
     TargetOutput=""
